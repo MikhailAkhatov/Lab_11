@@ -1,0 +1,100 @@
+import java.util.*;
+import java.math.*;
+enum Drinks {
+    DRINK_1("Coke Cola", 70),
+    DRINK_2("Sprite", 75),
+    DRINK_3("Fanta", 77);
+
+    private final String name;
+    private final int price;
+    Drinks(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+    String getName() {
+        return name;
+    }
+    int getPrice() {
+        return price;
+    }
+}
+
+enum Money {
+    BANKNOTE_1(10),
+    BANKNOTE_2(50),
+    BANKNOTE_3(100),
+    BANKNOTE_4(200),
+    BANKNOTE_5(500);
+
+    private final int denomination;
+    Money(int denomination) {
+        this.denomination = denomination;
+    }
+    int getDenomination() {
+        return denomination;
+    }
+}
+
+public class Lab_11_Ex_1 {
+    public static void main(String[] args) {
+        System.out.println("You can buy the following drinks:");
+        for (Drinks ds : Drinks.values())
+            System.out.println("Drink_" + (ds.ordinal() + 1) + ": " + ds.getName() + ", price = " + ds.getPrice());
+        System.out.println("Push the button (1, 2 or 3) to choose the drink");
+        int flag_get = 0;
+        while (flag_get != 1) {
+            Scanner s = new Scanner(System.in);
+            //s.useLocale(Locale.US);
+            int number = s.nextInt();
+            int flag = 0;
+            int amount_of_inserted_money;
+            int price_of_chosen_product;
+            switch (number) {
+                case 1: {
+                    price_of_chosen_product = Drinks.DRINK_1.getPrice();
+                    System.out.println("Insert " + Drinks.DRINK_1.getPrice() + " to buy " + Drinks.DRINK_1.getName());
+                    amount_of_inserted_money = s.nextInt();
+                    break;
+                }
+                case 2: {
+                    price_of_chosen_product = Drinks.DRINK_2.getPrice();
+                    System.out.println("Insert " + Drinks.DRINK_2.getPrice() + " to buy " + Drinks.DRINK_1.getName());
+                    amount_of_inserted_money = s.nextInt();
+                    break;
+                }
+                case 3: {
+                    price_of_chosen_product = Drinks.DRINK_3.getPrice();
+                    System.out.println("Insert " + Drinks.DRINK_3.getPrice() + " to buy " + Drinks.DRINK_3.getName());
+                    amount_of_inserted_money = s.nextInt();
+                    break;
+                }
+                default: {
+                    System.out.println("You pushed invalid button, try again");
+                    amount_of_inserted_money = 0;
+                    price_of_chosen_product = 0;
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                int change;
+                if (amount_of_inserted_money <= 0) System.out.println("Error");
+                else if (amount_of_inserted_money < price_of_chosen_product) {
+                    while (amount_of_inserted_money < price_of_chosen_product) {
+                        System.out.println("You insert not enough money, returning money back");
+                        amount_of_inserted_money = s.nextInt();
+                    }
+                    change = amount_of_inserted_money - price_of_chosen_product;
+                    System.out.println("Take your drink, your change = " + change);
+                    flag_get = 1;
+
+                }
+                else {
+                    change = amount_of_inserted_money - price_of_chosen_product;
+                    System.out.println("Take your drink, your change = " + change);
+                    flag_get = 1;
+                }
+            }
+        }
+    }
+}
